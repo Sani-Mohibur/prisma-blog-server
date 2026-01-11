@@ -1,0 +1,16 @@
+Generate the Client: npx prisma generate
+Push to Database: npx prisma db push
+Opens DB UI in browser: npx prisma studio
+
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/server.ts",
+    "seed:admin": "tsx src/scripts/seedAdmin.ts" 
+  },
+No need to npx:
+Command: npm install -D tsx
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/server.ts",
+    "seed:admin": "tsx src/scripts/seedAdmin.ts" 
+  },
