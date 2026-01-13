@@ -91,7 +91,44 @@ const getAllPost = async ({
       [sortBy]: sortOrder,
     },
   });
-  return result;
+
+  const total = await prisma.post.count({
+    where: {
+      AND: andConditions,
+    },
+  });
+
+  return {
+    data: result,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
 
-export const postService = { createPost, getAllPost };
+const getPostById = async (id: string) => {
+  return await prisma.$transaction(async (tx) => {
+    await tx.post.update({
+      where: {
+        id: id,
+      },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+
+    const result = await tx.post.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return result;
+  });
+};
+
+export const postService = { createPost, getAllPost, getPostById };
