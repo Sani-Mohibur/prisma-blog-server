@@ -4,6 +4,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
 import cors from "cors";
 import morgan from "morgan";
+import { commentRouter } from "./modules/comment/comment.route";
 
 const app: Application = express();
 app.use(morgan("dev"));
@@ -19,6 +20,7 @@ app.use(express.json());
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use("/posts", postRouter);
+app.use("/comments", commentRouter);
 
 app.get("/", (req, res) => {
   res.send("API is working!");
