@@ -14,3 +14,7 @@ Command: npm install -D tsx
     "dev": "tsx watch src/server.ts",
     "seed:admin": "tsx src/scripts/seedAdmin.ts" 
   },
+
+When update or change anything in schema.prisma you need to migrate and generate this
+- npx prisma migrate dev
+- npx prisma generate
