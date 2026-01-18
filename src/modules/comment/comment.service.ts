@@ -56,33 +56,6 @@ const getCommentsByAuthor = async (authorId: string) => {
   });
 };
 
-// const deleteComment = async (commentId: string, authorId: string) => {
-//   const commentData = await prisma.comment.findUnique({
-//     where: {
-//       id: commentId,
-//     },
-//     select: {
-//       id: true,
-//       content: true,
-//       authorId: true,
-//     },
-//   });
-//   if (!commentData) {
-//     throw new Error("Comment not found!");
-//   }
-
-//   if (commentData.authorId !== authorId) {
-//     throw new Error("You are not authorized to delete this comment");
-//   }
-//   console.log(commentData);
-
-//   // return await prisma.comment.delete({
-//   //   where: {
-//   //     id: commentData.id,
-//   //   },
-//   // });
-// };
-
 const deleteComment = async (commentId: string, authorId: string) => {
   const commentData = await prisma.comment.findFirst({
     where: {
@@ -132,10 +105,34 @@ const updateComment = async (
   });
 };
 
+const moderateComment = async (id: string, data: { status: CommentStatus }) => {
+  const commentData = await prisma.comment.findUniqueOrThrow({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      status: true,
+    },
+  });
+
+  if (commentData.status === data.status) {
+    throw new Error(`This comment is already ${data.status}`);
+  }
+
+  return await prisma.comment.update({
+    where: {
+      id,
+    },
+    data,
+  });
+};
+
 export const CommentService = {
   createComment,
   getCommentById,
   getCommentsByAuthor,
   deleteComment,
   updateComment,
+  moderateComment,
 };
