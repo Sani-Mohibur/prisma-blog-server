@@ -8,7 +8,7 @@ import { prisma } from "../../lib/prisma";
 
 const createPost = async (
   data: Omit<Post, "id" | "createdAt" | "updatedAt" | "authorId">,
-  userId: string
+  userId: string,
 ) => {
   const result = await prisma.post.create({
     data: {
@@ -170,4 +170,112 @@ const getPostById = async (id: string) => {
   });
 };
 
-export const postService = { createPost, getAllPost, getPostById };
+const getMyPosts = async (authorId: string) => {
+  await prisma.user.findUniqueOrThrow({
+    where: {
+      id: authorId,
+      status: "ACTIVE",
+    },
+  });
+
+  const result = await prisma.post.findMany({
+    where: {
+      authorId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
+    },
+  });
+
+  // const total = await prisma.post.count({
+  //   where: {
+  //     authorId,
+  //   },
+  // });
+
+  // const total = await prisma.post.aggregate({
+  //   _count: {
+  //     id: true,
+  //   },
+  //   where: {
+  //     authorId,
+  //   },
+  // });
+
+  return result;
+};
+
+const updatePost = async (
+  postId: string,
+  data: Partial<Post>,
+  authorId: string,
+  isAdmin: boolean,
+) => {
+  const postData = await prisma.post.findUniqueOrThrow({
+    where: {
+      id: postId,
+    },
+    select: {
+      id: true,
+      authorId: true,
+    },
+  });
+
+  if (!isAdmin && postData.authorId !== authorId) {
+    throw new Error("You have not access to edit the post");
+  }
+  if (!isAdmin) {
+    delete data.isFeatured;
+  }
+  const result = await prisma.post.update({
+    where: {
+      id: postData.id,
+    },
+    data,
+  });
+  return result;
+};
+
+const deletePost = async (
+  postId: string,
+  authorId: string,
+  isAdmin: boolean,
+) => {
+  const postData = await prisma.post.findUniqueOrThrow({
+    where: {
+      id: postId,
+    },
+    select: {
+      id: true,
+      authorId: true,
+    },
+  });
+  if (!isAdmin && postData.authorId !== authorId) {
+    throw new Error("You don't have permission to delete this post!");
+  }
+
+  return await prisma.post.delete({
+    where: {
+      id: postId,
+    },
+  });
+};
+
+const getStats = async () => {};
+
+export const postService = {
+  createPost,
+  getAllPost,
+  getPostById,
+  getMyPosts,
+  updatePost,
+  deletePost,
+  getStats,
+};
