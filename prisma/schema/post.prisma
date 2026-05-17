@@ -8,6 +8,7 @@ model Post {
     tags       String[]
     views      Int        @default(0)
     authorId   String
+    authorName String?
     createdAt  DateTime   @default(now())
     updatedAt  DateTime   @updatedAt
     comments   Comment[]

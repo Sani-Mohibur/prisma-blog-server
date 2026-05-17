@@ -5,6 +5,7 @@ const createComment = async (req: Request, res: Response) => {
   try {
     const user = req.user;
     req.body.authorId = user?.id;
+    req.body.authorName = user?.name;
     const result = await CommentService.createComment(req.body);
     res.status(201).json(result);
   } catch (error) {
@@ -48,7 +49,7 @@ const deleteComment = async (req: Request, res: Response) => {
     const { commentId } = req.params;
     const result = await CommentService.deleteComment(
       commentId as string,
-      user?.id as string
+      user?.id as string,
     );
     res.status(200).json(result);
   } catch (error) {
@@ -66,7 +67,7 @@ const updateComment = async (req: Request, res: Response) => {
     const result = await CommentService.updateComment(
       commentId as string,
       req.body,
-      user?.id as string
+      user?.id as string,
     );
     res.status(200).json(result);
   } catch (error) {
@@ -82,7 +83,7 @@ const moderateComment = async (req: Request, res: Response) => {
     const { commentId } = req.params;
     const result = await CommentService.moderateComment(
       commentId as string,
-      req.body
+      req.body,
     );
     res.status(200).json(result);
   } catch (error) {

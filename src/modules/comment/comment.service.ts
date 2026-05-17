@@ -4,6 +4,7 @@ import { prisma } from "../../lib/prisma";
 const createComment = async (payload: {
   content: string;
   authorId: string;
+  authorName: string;
   postId: string;
   parentId?: string;
 }) => {
@@ -80,7 +81,7 @@ const deleteComment = async (commentId: string, authorId: string) => {
 const updateComment = async (
   commentId: string,
   data: { content?: string; status?: CommentStatus },
-  authorId: string
+  authorId: string,
 ) => {
   const commentData = await prisma.comment.findFirst({
     where: {
