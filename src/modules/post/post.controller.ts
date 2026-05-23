@@ -50,7 +50,7 @@ const getAllPost = async (req: Request, res: Response) => {
       sortBy,
       sortOrder,
     });
-    res.json({ Posts: result });
+    res.json(result);
   } catch (error) {
     res.status(500).json({
       status: false,
