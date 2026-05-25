@@ -28,7 +28,7 @@ async function seedAdmin() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(adminData),
-      }
+      },
     );
 
     if (signUpAdmin.ok) {
@@ -46,4 +46,4 @@ async function seedAdmin() {
   }
 }
 
-await seedAdmin();
+seedAdmin();
