@@ -48,11 +48,28 @@ export const auth = betterAuth({
       },
     },
   },
+
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
     requireEmailVerification: false, // Turn off email verification
   },
+
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          return {
+            data: {
+              ...user,
+              emailVerified: true, // Forces true for both Google and Email signups
+            },
+          };
+        },
+      },
+    },
+  },
+
   emailVerification: {
     sendOnSignUp: false, // Turn off email verification
     autoSignInAfterVerification: true,
