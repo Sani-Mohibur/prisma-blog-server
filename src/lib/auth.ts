@@ -18,19 +18,18 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
-  advanced: {},
+  advanced: {
+    useSecureCookies: true,
+  },
 
   cookie: {
-    cookieCache: {
-      enabled: false,
-    },
-
-    crossSubDomain: true,
+    secure: true,
+    sameSite: "none",
   },
 
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:5000",
 
-  trustedOrigins: [process.env.APP_URL!],
+  trustedOrigins: [process.env.APP_URL!, "https://blog-post-khaki.vercel.app"],
   user: {
     additionalFields: {
       role: {
