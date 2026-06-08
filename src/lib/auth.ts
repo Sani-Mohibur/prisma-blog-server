@@ -28,7 +28,7 @@ export const auth = betterAuth({
     sameSite: "none",
   },
 
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:5000",
+  baseURL: process.env.BETTER_AUTH_URL,
 
   trustedOrigins: [process.env.APP_URL!, "https://blog-post-khaki.vercel.app"],
   user: {
