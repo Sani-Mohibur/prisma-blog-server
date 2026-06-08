@@ -19,7 +19,8 @@ export const auth = betterAuth({
   }),
 
   advanced: {
-    useSecureCookies: process.env.NODE_ENV === "production",
+    // useSecureCookies: process.env.NODE_ENV === "production",
+    useSecureCookies: true, // Do not change this value. Otherwise, a state mismatch may occur because the frontend and backend are deployed to different sites.
   },
 
   cookie: {
