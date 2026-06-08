@@ -8,13 +8,18 @@ import { prisma } from "../../lib/prisma";
 import { UserRole } from "../../middlewares/auth.middleware";
 
 const createPost = async (
-  data: Omit<Post, "id" | "createdAt" | "updatedAt" | "authorId">,
+  data: Omit<
+    Post,
+    "id" | "createdAt" | "updatedAt" | "authorId" | "authorName"
+  >,
   userId: string,
+  authorName: string,
 ) => {
   const result = await prisma.post.create({
     data: {
       ...data,
       authorId: userId,
+      authorName: authorName,
     },
   });
   return result;
@@ -22,6 +27,7 @@ const createPost = async (
 
 const getAllPost = async ({
   search,
+  title,
   tags,
   isFeatured,
   status,
@@ -33,6 +39,7 @@ const getAllPost = async ({
   sortOrder,
 }: {
   search: string | undefined;
+  title: string | undefined;
   tags: string[] | [];
   isFeatured: boolean | undefined;
   status: PostStatus | undefined;
@@ -63,6 +70,15 @@ const getAllPost = async ({
           tags: { has: search as string },
         },
       ],
+    });
+  }
+
+  if (title) {
+    andConditions.push({
+      title: {
+        contains: title,
+        mode: "insensitive",
+      },
     });
   }
 
@@ -195,21 +211,6 @@ const getMyPosts = async (authorId: string) => {
     },
   });
 
-  // const total = await prisma.post.count({
-  //   where: {
-  //     authorId,
-  //   },
-  // });
-
-  // const total = await prisma.post.aggregate({
-  //   _count: {
-  //     id: true,
-  //   },
-  //   where: {
-  //     authorId,
-  //   },
-  // });
-
   return result;
 };
 
@@ -313,6 +314,17 @@ const getStats = async () => {
   });
 };
 
+const incrementReadTime = async (id: string, secondsSpent: number) => {
+  return await prisma.post.update({
+    where: { id },
+    data: {
+      readTime: {
+        increment: Number(secondsSpent),
+      },
+    },
+  });
+};
+
 export const postService = {
   createPost,
   getAllPost,
@@ -321,4 +333,5 @@ export const postService = {
   updatePost,
   deletePost,
   getStats,
+  incrementReadTime,
 };

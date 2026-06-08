@@ -12,7 +12,11 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
         error: "Unauthorized!",
       });
     }
-    const result = await postService.createPost(req.body, user.id as string);
+    const result = await postService.createPost(
+      req.body,
+      user.id as string,
+      user.name as string,
+    );
     res.status(201).json({ status: "Success", data: result });
   } catch (error) {
     next(error);
@@ -21,9 +25,11 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
 
 const getAllPost = async (req: Request, res: Response) => {
   try {
-    const { search } = req.query;
+    const { search, title } = req.query;
     const searchString = typeof search === "string" ? search : undefined;
+    const titleString = typeof title === "string" ? title : undefined;
     const tags = req.query.tags ? (req.query.tags as string).split(",") : [];
+
     const isFeatured = req.query.isFeatured
       ? req.query.isFeatured === "true"
         ? true
@@ -40,6 +46,7 @@ const getAllPost = async (req: Request, res: Response) => {
 
     const result = await postService.getAllPost({
       search: searchString,
+      title: titleString,
       tags,
       isFeatured,
       status,
@@ -151,6 +158,24 @@ const getStats = async (req: Request, res: Response) => {
   }
 };
 
+const incrementReadTime = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { secondsSpent } = req.body;
+
+    const result = await postService.incrementReadTime(
+      id as string,
+      secondsSpent,
+    );
+
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update read time" });
+  }
+};
+
 export const postController = {
   createPost,
   getAllPost,
@@ -159,4 +184,5 @@ export const postController = {
   updatePost,
   deletePost,
   getStats,
+  incrementReadTime,
 };

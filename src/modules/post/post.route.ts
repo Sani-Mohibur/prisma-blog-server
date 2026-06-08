@@ -27,5 +27,6 @@ router.delete(
   auth(UserRole.ADMIN, UserRole.USER),
   postController.deletePost,
 );
+router.patch("/:id/read-time", postController.incrementReadTime);
 
 export const postRouter = router;
