@@ -5,6 +5,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Better Auth](https://img.shields.io/badge/Better_Auth-000000?style=for-the-badge&logo=brandfolder&logoColor=orange)
 
 A production-grade, highly scalable backend engine driving a modern content management ecosystem. Built on **Express.js** and typed with **TypeScript**, it uses **Prisma** paired with **PostgreSQL** to manage highly structured relational schemas. Security is managed through seamless, decentralized cross-domain sessions powered by **Better Auth**.
 
