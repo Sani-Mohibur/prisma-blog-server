@@ -1,6 +1,17 @@
-# Prisma Blog Server (`prisma-blog-server`)
+# Prisma Blog Server
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 
 A production-grade, highly scalable backend engine driving a modern content management ecosystem. Built on **Express.js** and typed with **TypeScript**, it uses **Prisma** paired with **PostgreSQL** to manage highly structured relational schemas. Security is managed through seamless, decentralized cross-domain sessions powered by **Better Auth**.
+
+* **Live API Deployment Server:** [https://prisma-blog-server-a55e.onrender.com](https://prisma-blog-server-a55e.onrender.com)
+* **Corresponding UI Frontend Client:** [prisma-blog-client](https://blog-post-khaki.vercel.app)
+
+> ⚠️ **Important Note:** This is the backend data engine layer only. It requires the corresponding user interface client setup to be fully functional. You can find the client repository here: [prisma-blog-client](https://blog-post-khaki.vercel.app)
 
 ---
 
