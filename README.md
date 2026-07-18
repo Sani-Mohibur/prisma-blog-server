@@ -12,7 +12,7 @@ A production-grade, highly scalable backend engine driving a modern content mana
 * **Live API Deployment Server:** [https://prisma-blog-server-a55e.onrender.com](https://prisma-blog-server-a55e.onrender.com)
 * **Corresponding UI Frontend Client:** [thoughtspace-blog-platform](https://blog-post-khaki.vercel.app)
 
-> ⚠️ **Important Note:** This is the backend data engine layer only. It requires the corresponding user interface client setup to be fully functional. You can find the client repository here: [blog-platform](https://blog-post-khaki.vercel.app)
+> ⚠️ **Important Note:** This is the backend data engine layer only. It requires the corresponding user interface client setup to be fully functional. You can find the client repository here: [blog-platform](https://github.com/Sani-Mohibur/blog-platform)
 
 ---
 
