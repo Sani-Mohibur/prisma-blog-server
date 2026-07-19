@@ -1,10 +1,17 @@
+# Dependencies
 node_modules
-# Keep environment variables out of version control
+
+# Env Files (keep out of version control)
 .env
 
+# Build Output
+/dist
+
+# Generated Code
 /generated/prisma
 /src/generated/prisma
-/dist
+
+# Misc
 notes.txt
 notesIdeas.txt
 /private
