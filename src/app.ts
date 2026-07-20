@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: process.env.APP_URL || "https://blog-post-khaki.vercel.app",
+    origin: process.env.APP_URL,
     credentials: true, // authenticate users with cookies or tokens
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   }),
