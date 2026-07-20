@@ -21,10 +21,13 @@ app.use(
 );
 app.use(express.json());
 
+import { uploadRouter } from "./modules/upload/upload.route";
+
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
+app.use("/upload", uploadRouter);
 
 app.get("/", (req, res) => {
   res.send("API is working!");

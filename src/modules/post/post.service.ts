@@ -102,6 +102,9 @@ const getAllPost = async ({
     andConditions.push({ authorId });
   }
 
+  // Hide private posts in public listings
+  andConditions.push({ isPrivate: false });
+
   const result = await prisma.post.findMany({
     take: limit,
     skip,
@@ -137,8 +140,17 @@ const getAllPost = async ({
   };
 };
 
-const getPostById = async (id: string) => {
+const getPostById = async (id: string, requesterId?: string, isAdmin?: boolean) => {
   return await prisma.$transaction(async (tx) => {
+    const postCheck = await tx.post.findUniqueOrThrow({
+      where: { id },
+      select: { isPrivate: true, authorId: true }
+    });
+
+    if (postCheck.isPrivate && postCheck.authorId !== requesterId && !isAdmin) {
+      throw new Error("This post is private.");
+    }
+
     await tx.post.update({
       where: {
         id: id,

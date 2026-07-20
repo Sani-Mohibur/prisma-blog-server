@@ -17,6 +17,8 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
+    "@types/multer": "^1.4.13",
+    "@types/node": "^25.9.2",
     "@types/nodemailer": "^7.0.4",
     "@types/pg": "^8.16.0",
     "dotenv": "^17.4.2",
@@ -27,11 +29,13 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.8.0",
-    "@types/node": "^25.9.2",
     "better-auth": "^1.4.9",
+    "cloudinary": "^2.10.0",
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "morgan": "^1.10.1",
+    "multer": "1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^7.0.12",
     "pg": "^8.16.3"
   }

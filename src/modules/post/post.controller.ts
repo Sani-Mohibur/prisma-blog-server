@@ -72,7 +72,17 @@ const getPostById = async (req: Request, res: Response) => {
     if (!id) {
       throw new Error("Post Id is required!");
     }
-    const result = await postService.getPostById(id);
+
+    // Try to get session to determine if requester can see private post
+    const { auth: betterAuth } = await import("../../lib/auth");
+    const session = await betterAuth.api.getSession({
+      headers: req.headers as any,
+    });
+    
+    const requesterId = session?.user?.id;
+    const isAdmin = session?.user?.role === UserRole.ADMIN || session?.user?.role === UserRole.MODERATOR;
+
+    const result = await postService.getPostById(id, requesterId, isAdmin);
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json({
