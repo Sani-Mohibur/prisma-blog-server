@@ -4,6 +4,7 @@ import { auth as betterAuth } from "../lib/auth";
 export enum UserRole {
   USER = "USER",
   ADMIN = "ADMIN",
+  MODERATOR = "MODERATOR",
 }
 
 declare global {
