@@ -5,6 +5,7 @@ import { auth } from "./lib/auth";
 import cors from "cors";
 import morgan from "morgan";
 import { commentRouter } from "./modules/comment/comment.route";
+import { adminRouter } from "./modules/admin/admin.route";
 import errorHandler from "./middlewares/globalErrorHandler";
 import { notFound } from "./middlewares/notFound";
 
@@ -22,12 +23,15 @@ app.use(
 app.use(express.json());
 
 import { uploadRouter } from "./modules/upload/upload.route";
+import { userRouter } from "./modules/user/user.route";
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
 app.use("/upload", uploadRouter);
+app.use("/admin", adminRouter);
+app.use("/users", userRouter);
 
 app.get("/", (req, res) => {
   res.send("API is working!");
