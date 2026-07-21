@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
     "seed:admin": "tsx src/scripts/seedAdmin.ts",
+    "seed:moderator": "tsx src/scripts/seedModerator.ts",
     "build": "tsc",
     "start": "node dist/src/server.js"
   },
