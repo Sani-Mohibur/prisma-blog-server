@@ -15,6 +15,7 @@ model User {
     bio         String?
     dateOfBirth DateTime?
     gender      String?
+    isFeatured  Boolean   @default(false)
 
     @@unique([email])
     @@map("user")

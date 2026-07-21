@@ -1,0 +1,10 @@
+model Settings {
+    id          String   @id @default("default")
+    siteName    String   @default("ThoughtSpace")
+    description String?
+    logo        String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@map("settings")
+}
