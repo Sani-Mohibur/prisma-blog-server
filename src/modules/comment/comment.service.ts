@@ -57,9 +57,9 @@ const getCommentsByAuthor = async (authorId: string) => {
   });
 };
 
-const deleteComment = async (commentId: string, authorId: string) => {
+const deleteComment = async (commentId: string, authorId: string, isAdmin?: boolean) => {
   const commentData = await prisma.comment.findFirst({
-    where: {
+    where: isAdmin ? { id: commentId } : {
       id: commentId,
       authorId,
     },
@@ -129,6 +129,30 @@ const moderateComment = async (id: string, data: { status: CommentStatus }) => {
   });
 };
 
+const getAllComments = async (page: number, limit: number) => {
+  const skip = (page - 1) * limit;
+  const data = await prisma.comment.findMany({
+    skip,
+    take: limit,
+    orderBy: { createdAt: 'desc' },
+    include: {
+      post: {
+        select: { title: true }
+      }
+    }
+  });
+  const total = await prisma.comment.count();
+  return {
+    data,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit)
+    }
+  };
+};
+
 export const CommentService = {
   createComment,
   getCommentById,
@@ -136,4 +160,5 @@ export const CommentService = {
   deleteComment,
   updateComment,
   moderateComment,
+  getAllComments,
 };

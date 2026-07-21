@@ -49,7 +49,7 @@ const getAllPost = async ({
   skip: number;
   sortBy: string;
   sortOrder: string;
-}) => {
+}, isAdmin?: boolean) => {
   const andConditions: PostWhereInput[] = [];
   if (search) {
     andConditions.push({
@@ -103,7 +103,9 @@ const getAllPost = async ({
   }
 
   // Hide private posts in public listings
-  andConditions.push({ isPrivate: false });
+  if (!isAdmin) {
+    andConditions.push({ isPrivate: false });
+  }
 
   const result = await prisma.post.findMany({
     take: limit,
